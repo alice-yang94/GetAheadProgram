@@ -13,7 +13,7 @@ as the subclass of Python iterator with hasNext function in order to
 test my FlattenedIterator class thoroughly.
 """
 from myiterator import MyIterator
-from flattenediterator import FlattenedIterator
+from flattenediterator_queue import FlattenedIterator
 
 class TestFlattenedIterator(unittest.TestCase):
 

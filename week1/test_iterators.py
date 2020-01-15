@@ -6,7 +6,7 @@ Created on Tue Jan  7 09:08:16 2020
 @author: wenke_yang
 """
 from myiterator import MyIterator
-from flattenediterator import FlattenedIterator
+from flattenediterator_queue import FlattenedIterator
 '''
 # test my iterator     
 myit = MyIterator([1,2,3])
