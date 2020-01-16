@@ -21,17 +21,17 @@ def balanced_parentheses(p_str):
 
     for p in p_str:
         """There are three possible situations:
-        - if the parentheses got canceled(a pair found), pop stack, 
-        increment count
-        - if single RIGHT_PAREN found, update max count, 
-        clear current count
-        - if single LEFT_PAREN found, push to stack 
+        - if a single open parenthesis is found: push it to stack
+        - if a single close parenthesis is found
+            - if the stack is not empty, 
+            the pair of parentheses got canceled: 
+                pop stack, increment count by 2;
+            - else update max count, clear current count;
         """
         if p == LEFT_PAREN:
             stack.append(p)
         elif p == RIGHT_PAREN:
-            # peek the top of stack
-            if len(stack) > 0 and stack[len(stack) - 1] == LEFT_PAREN:
+            if len(stack) > 0:
                 stack.pop()
                 curr_count += 2
             else:
