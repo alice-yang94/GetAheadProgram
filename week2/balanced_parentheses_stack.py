@@ -2,8 +2,9 @@
 LEFT_PAREN = '('
 RIGHT_PAREN = ')'
 
-def balanced_parentheses(p_str):
-    """Find the longest contiguous substring of balanced parentheses
+def balanced_parentheses_stack(p_str):
+    """Find the longest contiguous substring of balanced parentheses 
+    using stack
 
     Args:
         p_str: a string of parentheses
@@ -31,6 +32,11 @@ def balanced_parentheses(p_str):
         if p == LEFT_PAREN:
             stack.append(p)
         elif p == RIGHT_PAREN:
+            """
+            Originally peek the top, however, it is found that all 
+            elements in the stack are LEFT_PAREN. so only needs to check
+            the emptiness
+            """
             if len(stack) > 0:
                 stack.pop()
                 curr_count += 2

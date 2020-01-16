@@ -1,5 +1,5 @@
 import unittest
-from balanced_parentheses import balanced_parentheses
+from balanced_parentheses_counter import balanced_parentheses
 
 class TestBalancedParentheses(unittest.TestCase):
     def test_short_mixed(self):
@@ -38,7 +38,7 @@ class TestBalancedParentheses(unittest.TestCase):
         """
         Test if a long all good string works
         """
-        test_parens = '(((())))()()()((()))(())(())()'
+        test_parens = '(((())))()()()((()))(())(()())'
         self.assertEqual(balanced_parentheses(test_parens), 30, 
                         'Should be 30')
 
