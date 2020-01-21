@@ -37,13 +37,10 @@ def balanced_parentheses(p_str):
                 open_paren_count -= 1
                 curr_len_count += 2
             else:
-                if curr_len_count > max_len_count:
-                    max_len_count = curr_len_count
+                max_len_count = max(max_len_count, curr_len_count)
                 curr_len_count = 0
         else:
             raise ValueError('Error. Incorrect input!')
     
-    if curr_len_count > max_len_count:
-        return curr_len_count
-    return max_len_count
+    return max(max_len_count, curr_len_count)
 

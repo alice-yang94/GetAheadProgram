@@ -42,5 +42,21 @@ class TestBalancedParentheses(unittest.TestCase):
         self.assertEqual(balanced_parentheses(test_parens), 30, 
                         'Should be 30')
 
+    def test_given(self):
+        """
+        Tests given by Get Ahead Program
+        """
+        assert balanced_parentheses('') == 0
+        assert balanced_parentheses('(') == 0
+        assert balanced_parentheses(')') == 0
+        assert balanced_parentheses('()(') == 2
+        assert balanced_parentheses('())') == 2
+        assert balanced_parentheses('(())') == 4
+        assert balanced_parentheses('()()') == 4
+        assert balanced_parentheses('(()())') == 6
+        assert balanced_parentheses('())(())') == 4
+        assert balanced_parentheses(')(()))))(((()') == 4
+        assert balanced_parentheses('(()())((((()))))') == 16
+
 if __name__ == '__main__':
     unittest.main()
