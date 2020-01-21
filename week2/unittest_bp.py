@@ -1,5 +1,7 @@
 import unittest
-from balanced_parentheses_counter import balanced_parentheses
+from balanced_parentheses_stack import balanced_parentheses
+
+#from balanced_parentheses_counter import balanced_parentheses
 
 class TestBalancedParentheses(unittest.TestCase):
     def test_short_mixed(self):
@@ -53,6 +55,7 @@ class TestBalancedParentheses(unittest.TestCase):
         assert balanced_parentheses('())') == 2
         assert balanced_parentheses('(())') == 4
         assert balanced_parentheses('()()') == 4
+        assert balanced_parentheses('()(()') == 2
         assert balanced_parentheses('(()())') == 6
         assert balanced_parentheses('())(())') == 4
         assert balanced_parentheses(')(()))))(((()') == 4

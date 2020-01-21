@@ -1,3 +1,10 @@
+""" 
+This is a WRONG version: 
+did not consider situation with more open parentheses:
+    e.g. (()(()
+Have to use a data structure(stack) to store indices/positions of 
+all unpaired open parentheses
+"""
 # constants declarations
 OPEN_PAREN = '('
 CLOSE_PAREN = ')'
@@ -44,3 +51,4 @@ def balanced_parentheses(p_str):
     
     return max(max_len_count, curr_len_count)
 
+print(balanced_parentheses('()(()'))

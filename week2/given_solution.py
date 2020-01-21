@@ -37,6 +37,7 @@ if __name__ == '__main__':
     assert longest_balanced('())') == 2
     assert longest_balanced('(())') == 4
     assert longest_balanced('()()') == 4
+    print(longest_balanced('()(()'))
     assert longest_balanced('(()())') == 6
     assert longest_balanced('())(())') == 4
     assert longest_balanced(')(()))))(((()') == 4
