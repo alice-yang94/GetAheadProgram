@@ -52,8 +52,5 @@ class TestLongestPathInTree(unittest.TestCase):
         self.assertEqual(longest_path_in_tree(test_tree), 2,
             'Should be 2')    
 
-                        
-
-
 if __name__ == '__main__':
     unittest.main()
