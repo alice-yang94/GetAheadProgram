@@ -10,7 +10,7 @@ class Node:
                 self.depth = max(child.depth+1, self.depth)
     
     def __repr__(self):
-        return self.val + ' ' + str(self.ifTerminate)
+        return f'{self.val} {self.ifTerminate}'
 
     def print_children(self):
         if self.children:

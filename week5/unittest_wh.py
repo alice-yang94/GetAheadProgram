@@ -1,5 +1,5 @@
 import unittest
-from word_hunting_DFS import get_longest_word
+from word_hunting_trie import get_longest_word
 
 GRID_SIZE = 4
 

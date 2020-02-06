@@ -33,36 +33,14 @@ def buildDictTrie(grid, dictionary, maxLen):
                 currNode = nextNode
     return root
 
-def isPrefix(string, node):
+def isChild(letter, node):
     """
-    Returns if the given string is a prefix of any word in the dictionary
-
-    Args:
-        string: a string of characters
-        currNode:
+    Returns if the given letter is a child of node of trie
     """
-    # build a trie using dictionary to speed up the lookup 
-    # - Without trie: lookup complexity is O(N*M) 
-    #   where N is the number of words in dictionary, 
-    #   M is the average number of letters for the words in dictionary
-    # - With trie: lookup complexity is O(1) 
     currNode = node
-    for letter in string:
-        if letter in currNode.children.keys():
-            currNode = currNode.children[letter]
-        else:
-            return False, None
-    return True, currNode
-
-def isWord(word, dictionary):
-    """
-    Returns if the given word exists in the dictionary. O(1) complexity
-
-    Args:
-        word: a string of characters
-        dictionary: a set of words
-    """
-    return word in dictionary
+    if letter in currNode.children.keys():
+        return True, currNode.children[letter]
+    return False, None
 
 def isValidCoord(coord, size):
     """
@@ -102,14 +80,14 @@ def path_to_word(path, lettersGrid):
     """
     return ''.join([lettersGrid[coord[0]][coord[1]] for coord in path])
 
-def dfs_on_grid(stack, size, maxLen, lettersGrid, trieRoot):
+def dfs_on_grid(stack, size, maxLen, lettersGrid):
     dirs = ['up', 'down', 'left', 'right',
             'up left', 'up right', 'down left', 'down right']
     longestLen = 0
     longestPath = []
 
     while stack:
-        currCoord, currPath = stack.pop()
+        currCoord, currPath, currNode = stack.pop()
         # if the path has no way to grow in any direction,
         # update longest path and length
         isGrowing = False
@@ -118,13 +96,11 @@ def dfs_on_grid(stack, size, maxLen, lettersGrid, trieRoot):
             # check is the new coordinate is valid and not visited
             if (isValidCoord(newCoord, size) and \
                 (newCoord not in currPath)):
-                newPath = currPath + [newCoord]
-                word = path_to_word(newPath, lettersGrid)
-                # check isWord first because the set access time is O(1),
-                # while the average time complexity of isPrefix is O(n),
-                # n is the length of word
-                if isWord(word, trieRoot) or isPrefix(word, trieRoot):
-                    stack.append((newCoord, newPath))
+                letter = lettersGrid[newCoord[0]][newCoord[1]]
+                ischild, newNode = isChild(letter, currNode)
+                if ischild:
+                    newPath = currPath + [newCoord]
+                    stack.append((newCoord, newPath, newNode))
                     isGrowing = True
                     if len(newPath) == maxLen:
                         return newPath
@@ -146,9 +122,12 @@ def get_longest_word(lettersGrid, dictionary):
         for j in range(size):      
             startCoord = (i,j)
             startPath = [startCoord]
-            startStack = [(startCoord, startPath)]
+            ischild, startNode = isChild(lettersGrid[i][j], trieRoot)
+            if not ischild:
+                continue
+            startStack = [(startCoord, startPath, startNode)]
             currLen, currPath = dfs_on_grid(startStack, size, maxLen,
-                lettersGrid, trieRoot)
+                lettersGrid)
             if currLen == maxLen:
                 return path_to_word(currPath, lettersGrid)
             if currLen > longestLen:
