@@ -1,0 +1,8 @@
+car
+cooler
+record
+scooter
+sport
+soap
+soda
+sort
