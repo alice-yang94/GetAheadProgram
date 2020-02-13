@@ -1,5 +1,4 @@
 import unittest
-from car_plate_vocabulary_trie_and_bfs import get_shortest_words
 from car_plate_vocabulary_inverted_index import get_shortest_words
 
 class TestShortestWords(unittest.TestCase):

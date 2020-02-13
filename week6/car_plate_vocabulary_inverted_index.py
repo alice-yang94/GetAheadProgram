@@ -4,23 +4,20 @@ from collections import defaultdict
 def build_inverted_index(vocabulary):
     """
     Returns an inverted index of the given vocabulary, keys are letters,
-    values are set of words that contains its key
+    values are set of words that contains this letter
     """
     invertedIndex = defaultdict(set)
-    for word in vocabulary:
-        # To match the cases, all letters in vocabulary are lower cased
+    for index, word in enumerate(vocabulary):
+        # all letters are converted into lower case
         for letter in word.lower():
-            invertedIndex[letter].add(word)
+            # words are converted into indices
+            invertedIndex[letter].add(index)
     return invertedIndex
 
 def extract_letters(plate):
-    """Returns all letters contained in the plate. To match the cases,
-    all letters are lower cased"""
-    plateLetters = defaultdict(int)
-    for elem in plate:
-        if elem.isalpha():
-            plateLetters[elem.lower()] += 1
-    return plateLetters
+    """Returns letters contained in the plate. Letters are lower cased"""
+    plate = plate.lower()
+    return {l: plate.count(l) for l in set(plate) if l.isalpha()}
 
 def check_count(plateLetters, commonWords):
     """Returns the commonWords that meets the required count"""
@@ -55,6 +52,8 @@ def get_shortest_words(vocabulary, licensePlates):
     for plate in licensePlates:
         plateLetters = extract_letters(plate)
         commonWords = get_common_words(plateLetters, invertedIndex)
+        # convert indices back to words 
+        commonWords = [vocabulary[i] for i in commonWords]
         commonWords = check_count(plateLetters, commonWords)
         if not commonWords:
             continue
