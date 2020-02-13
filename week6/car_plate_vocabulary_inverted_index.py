@@ -27,7 +27,7 @@ def check_count(plateLetters, commonWords):
     for letter, count in plateLetters.items():
         if count > 1:
             commonWords = {word for word in commonWords 
-                if word.count(letter) == count}
+                if word.count(letter) >= count}
     return commonWords
 
 def get_common_words(plateLetters, invertedIndex):
