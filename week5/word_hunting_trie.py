@@ -1,24 +1,20 @@
 """
-This version of word hunting improve the isPrefix() by building a trie
-using the letters in dictionary in advance, which can reduce the time 
-complexity of isPrefix() from O(M) to O(1), where M is the number of 
-words in the dictionary.
-"""
+This version of word hunting replaced the isPrefix() and isWord() 
+functions with a dictionary trie (built using the letters in dictionary) 
+and the isChild function checking if the given letter is a child of 
+the current node of trie.
 
+The main idea is walking through the trie and the grid at same time.
+
+This reduced the time complexity of checking prefix and word
+from O(M) to O(1), where M is the number of words in the dictionary.
+"""
 from mytree import Node
 
 def buildDictTrie(grid, dictionary, maxLen):
     """
     Create a trie using the words in dictionary, each node is a 
     letter, each branch with a termination mark is a word
-
-    Args:
-        grid: a grid of letters
-        dictionary: a set of words
-        maxLen: the total number of cells in the grid
-    
-    Returns:
-        root: root of dictionary trie
     """
     root = Node(None, False)
     letters = set([letter for row in grid for letter in row])
@@ -49,29 +45,11 @@ def isValidCoord(coord, size):
     return coord[0] >= 0 and coord[0] < size and \
         coord[1] >= 0 and coord[1] < size
 
-def dirToIncrement(direction):
-    """
-    Returns the shifts in vertical and horizontal by giving direction
-    """
-    # assume upperleft corner is (0,0)
-    if direction == 'up':
-        return (0,-1)
-    elif direction == 'down':
-        return (0,1)
-    elif direction == 'left':
-        return (-1,0)
-    elif direction == 'right':
-        return (1,0)
-    vertical, horizontal = direction.split()
-    v1, h1 = dirToIncrement(vertical)
-    v2, h2 = dirToIncrement(horizontal)
-    return (v1+v2, h1+h2)
-
 def move(coord, direction):
     """
     Move the coord to the given direction, return the new coordinate
     """
-    vInc, hInc = dirToIncrement(direction)
+    vInc, hInc = direction
     return (coord[0]+vInc, coord[1]+hInc)
 
 def path_to_word(path, lettersGrid):
@@ -81,8 +59,8 @@ def path_to_word(path, lettersGrid):
     return ''.join([lettersGrid[coord[0]][coord[1]] for coord in path])
 
 def dfs_on_grid(stack, size, maxLen, lettersGrid):
-    dirs = ['up', 'down', 'left', 'right',
-            'up left', 'up right', 'down left', 'down right']
+    dirs = [(i,j) for i in range(-1, 2) for j in range(-1, 2)]
+
     longestLen = 0
     longestPath = []
 
@@ -111,6 +89,10 @@ def dfs_on_grid(stack, size, maxLen, lettersGrid):
     return longestLen, longestPath
 
 def get_longest_word(lettersGrid, dictionary):
+    """
+    Returns the longest word can be found in the grid and dictionary by
+    doing DFS on each cell in the grid
+    """
     size = len(lettersGrid)
     maxLen = size*size
     
